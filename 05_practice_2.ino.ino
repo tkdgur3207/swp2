@@ -12,35 +12,12 @@ void loop() {
     digitalWrite(led, LOW);
     delay(1000);
 
-    digitalWrite(led, HIGH);
-    delay(100);
-    digitalWrite(led, LOW);
-
-    delay(100);
-    
-    digitalWrite(led, HIGH);
-    delay(100);
-    digitalWrite(led, LOW);
-
-    delay(100);
-
-    digitalWrite(led, HIGH);
-    delay(100);
-    digitalWrite(led, LOW);
-
-    delay(100);
-
-    digitalWrite(led, HIGH);
-    delay(100);
-    digitalWrite(led, LOW);
-
-    delay(100);
-
-    digitalWrite(led, HIGH);
-    delay(100);
-    digitalWrite(led, LOW);
-
-    delay(100);
+    for (int i=1; i<=5; i++) {
+      digitalWrite(led, HIGH);
+      delay(100);
+      digitalWrite(led, LOW);
+      delay(100);
+    }
 
     digitalWrite(led, HIGH);
     flag=0;
