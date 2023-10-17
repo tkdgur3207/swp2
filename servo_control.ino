@@ -10,7 +10,7 @@
 #define INTERVAL 25      // sampling interval (unit: msec)
 #define PULSE_DURATION 10 // ultra-sound Pulse Duration (unit: usec)
 #define _DIST_MIN 100.0   // minimum distance to be measured (unit: mm)
-#define _DIST_MAX 300.0   // maximum distance to be measured (unit: mm)
+#define _DIST_MAX 500.0   // maximum distance to be measured (unit: mm)
 
 #define TIMEOUT ((INTERVAL / 2) * 1000.0) // maximum echo waiting time (unit: usec)
 #define SCALE (0.001 * 0.5 * SND_VEL) // coefficent to convert duration to distance
@@ -25,9 +25,9 @@
 // duty duration for myservo.writeMicroseconds()
 // NEEDS TUNING (servo by servo)
  
-#define _DUTY_MIN 550 // servo full clockwise position (0 degree)
+#define _DUTY_MIN 2500 // servo full clockwise position (0 degree)
 #define _DUTY_NEU 1500 // servo neutral position (90 degree)
-#define _DUTY_MAX 2500 // servo full counterclockwise position (180 degree)
+#define _DUTY_MAX 550 // servo full counterclockwise position (180 degree)
 
 // global variables
 float  dist_ema, dist_prev = _DIST_MAX; // unit: mm
@@ -94,16 +94,20 @@ void loop() {
     dist_prev = dist_raw;
     digitalWrite(PIN_LED, 0);       // LED ON      
   }
+  */
 
   // Apply ema filter here  
   dist_ema = dist_raw;
-*/
   // adjust servo position according to the USS read value
   if(dist_ema<=180) {
     myservo.writeMicroseconds(_DUTY_MIN);
   }
-  else if(dist_ema>180 && dist_ema<200) {
-    myservo.writeMicroseconds(_DUTY_NEU);
+  else if(dist_ema>180 && dist_ema<360) {
+    long _DUTY_MAP = map(_DUTY_MAP,180,360,_DIST_MIN,_DIST_MAX);
+    myservo.writeMicroseconds(_DUTY_MAP);
+    if (dist_ema == 190){
+      Serial.println(_DUTY_MAP);
+    }
   }
   else {
     myservo.writeMicroseconds(_DUTY_MAX);
