@@ -62,6 +62,7 @@ void loop() {
 
   dist_raw = USS_measure(PIN_TRIG, PIN_ECHO); // read distance
 
+/*
   if ((dist_raw == 0.0) || (dist_raw > _DIST_MAX)) {
     dist_raw = dist_prev;           // Cut higher than maximum
     digitalWrite(PIN_LED, 1);       // LED OFF
@@ -75,6 +76,19 @@ void loop() {
 
   // Apply ema filter here  
   dist_ema = dist_raw;
+  */
+
+
+   if ((dist_raw > _DIST_MAX) || (dist_raw < _DIST_MIN)) {
+    dist_raw = dist_prev;
+  }
+
+  // Update the EMA filter
+  dist_ema = _EMA_ALPHA * dist_raw + (1.0 - _EMA_ALPHA) * dist_ema;
+
+  // Store the current distance as the previous one
+  dist_prev = dist_ema;
+
 
   // adjust servo position according to the USS read value
  if(dist_ema<=180) {
