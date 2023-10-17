@@ -97,7 +97,7 @@ void loop() {
   */
 
   // Apply ema filter here  
-  dist_ema = dist_raw;
+  //dist_ema = dist_raw;
   // adjust servo position according to the USS read value
   if(dist_ema<=180) {
     myservo.writeMicroseconds(_DUTY_MIN);
